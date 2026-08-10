@@ -8,12 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     if: github.event.repository.fork == false
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-python@v2
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: 3.x
       - run: pip install pillow cairosvg
-      - run: pip install git+https://${GH_TOKEN}@github.com/squidfunk/mkdocs-material-insiders.git
+      - run: pip install mkdocs-material
       - run: mkdocs gh-deploy --force
       - run: |
           git config --global user.email "bot@logicng.org"
@@ -23,6 +23,3 @@ jobs:
           git add CNAME
           git commit -m "add CNAME file"
           git push origin gh-pages
-env:
-  GH_TOKEN: ${{ secrets.GH_TOKEN }} 
-
